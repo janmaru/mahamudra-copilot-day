@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cities>
+    <city>
+        <name>Tokyo</name>
+        <country>Japan</country>
+        <continent>Asia</continent>
+        <population>14000000</population>
+    </city>
+    <city>
+        <name>Paris</name>
+        <country>France</country>
+        <continent>Europe</continent>
+        <population>2141000</population>
+    </city>
+    <city>
+        <name>New York</name>
+        <country>USA</country>
+        <continent>North America</continent>
+        <population>8419000</population>
+    </city>
+    <city>
+        <name>Rio de Janeiro</name>
+        <country>Brazil</country>
+        <continent>South America</continent>
+        <population>6710000</population>
+    </city>
+    <city>
+        <name>Cairo</name>
+        <country>Egypt</country>
+        <continent>Africa</continent>
+        <population>9845000</population>
+    </city>
+    <city>
+        <name>Sydney</name>
+        <country>Australia</country>
+        <continent>Oceania</continent>
+        <population>5312000</population>
+    </city>
+</cities>

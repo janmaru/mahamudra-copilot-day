@@ -1,0 +1,39 @@
+{
+  "name": "copilot_day",
+  "version": "1.0.0",
+  "description": "Context7 MCP server with a local web UI for sending commands",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/index.ts --profile=local",
+    "dev:remote": "tsx src/index.ts --profile=remote",
+    "dev:ui": "tsx src/ui-server.ts --profile=local",
+    "dev:ui:remote": "tsx src/ui-server.ts --profile=remote",
+    "start": "node dist/index.js --profile=local",
+    "start:remote": "node dist/index.js --profile=remote",
+    "start:ui": "node dist/ui-server.js --profile=local",
+    "start:ui:remote": "node dist/ui-server.js --profile=remote",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run typecheck"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "context7",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@upstash/context7-sdk": "^0.3.0",
+    "dotenv": "^17.4.2",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}

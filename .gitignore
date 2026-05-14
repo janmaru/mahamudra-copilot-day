@@ -1,0 +1,14 @@
+# Workspace di lavoro per PR e Task (Document-as-Code)
+# Contiene materiale di processo non destinato al repository pubblico.
+2 - DAC/.workspace/
+
+# .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# Rider / VS Code
+.idea/
+.vscode/

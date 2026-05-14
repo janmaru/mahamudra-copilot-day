@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Context7 Command UI</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="connection-banner" id="connectionBanner">
+        <div class="connection-badge connection-badge-neutral" id="connectionBadge">
+          Sorgente docs: caricamento...
+        </div>
+        <div class="connection-meta" id="connectionMeta">Origine dati in caricamento...</div>
+      </section>
+
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Context7 local UI</p>
+          <h1>Invia comandi dal browser</h1>
+          <p class="subtitle">
+            Esegui <code>resolve-library-id</code> e <code>query-docs</code> da una
+            UI locale, senza passare da un client MCP.
+          </p>
+        </div>
+        <div class="status-card">
+          <h2>Stato server</h2>
+          <dl id="serverInfo" class="status-list">
+            <div><dt>Nome</dt><dd>Caricamento...</dd></div>
+            <div><dt>Versione</dt><dd>-</dd></div>
+            <div><dt>API key</dt><dd>-</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <div class="panel-header">
+            <h2>resolve-library-id</h2>
+            <button id="resolveSubmit" class="button">Invia comando</button>
+          </div>
+
+          <label>
+            Richiesta
+            <textarea id="resolveQuery" rows="4" placeholder="Need auth middleware docs"></textarea>
+          </label>
+
+          <label>
+            Nome libreria
+            <input id="libraryName" type="text" placeholder="next.js" />
+          </label>
+
+          <div class="output">
+            <div class="output-header">
+              <h3>Risultato testo</h3>
+            </div>
+            <pre id="resolveText">Nessun comando inviato.</pre>
+          </div>
+
+          <div class="output">
+            <div class="output-header">
+              <h3>Match librerie</h3>
+            </div>
+            <div id="libraryMatches" class="library-list empty">Nessun match.</div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <h2>query-docs</h2>
+            <button id="docsSubmit" class="button">Invia comando</button>
+          </div>
+
+          <label>
+            Library ID
+            <input id="libraryId" type="text" placeholder="/vercel/next.js" />
+            <small>Viene compilato automaticamente dopo `resolve-library-id`.</small>
+          </label>
+
+          <label>
+            Query documentazione
+            <textarea
+              id="docsQuery"
+              rows="4"
+              placeholder="middleware auth cookies redirect unauthenticated users"
+            ></textarea>
+          </label>
+
+          <label>
+            Max snippet
+            <input id="maxSnippets" type="number" min="1" max="20" value="5" />
+          </label>
+
+          <div class="output">
+            <div class="output-header">
+              <h3>Risultato testo</h3>
+            </div>
+            <div id="docsText" class="markdown-output">Nessun comando inviato.</div>
+          </div>
+
+          <div class="output">
+            <div class="output-header">
+              <h3>JSON</h3>
+            </div>
+            <pre id="docsJson">{}</pre>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>draft-library-request</h2>
+          <button id="promptSubmit" class="button button-secondary">Genera prompt</button>
+        </div>
+
+        <div class="two-columns">
+          <label>
+            Task
+            <textarea id="promptTask" rows="4" placeholder="Build login flow with latest Supabase auth docs"></textarea>
+          </label>
+
+          <label>
+            Library name opzionale
+            <input id="promptLibraryName" type="text" placeholder="supabase" />
+          </label>
+        </div>
+
+        <div class="output">
+          <div class="output-header">
+            <h3>Prompt generato</h3>
+          </div>
+          <pre id="promptText">Nessun prompt generato.</pre>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

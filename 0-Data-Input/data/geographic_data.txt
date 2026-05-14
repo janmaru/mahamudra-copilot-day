@@ -1,0 +1,8 @@
+Geographic Data:
+
+Tokyo, Japan, Asia, Population: 14,000,000
+Paris, France, Europe, Population: 2,141,000
+New York, USA, North America, Population: 8,419,000
+Rio de Janeiro, Brazil, South America, Population: 6,710,000
+Cairo, Egypt, Africa, Population: 9,845,000
+Sydney, Australia, Oceania, Population: 5,312,000
