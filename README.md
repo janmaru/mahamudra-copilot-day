@@ -27,7 +27,8 @@ Goal: configure Copilot so the correct solution to your problem is not a hypothe
 2. [Context as Logic — The Pricing Bubble](#2-context-as-logic--the-pricing-bubble)
 3. [Sub-Agent Orchestration — The Routing Table](#3-sub-agent-orchestration--the-routing-table)
 4. [Document-as-Code — README as Source of Truth](#4-document-as-code--readme-as-source-of-truth)
-5. [Folder Map](#folder-map)
+5. [The AI Cost Bubble — More Usage, Bigger Bill](#5-the-ai-cost-bubble--more-usage-bigger-bill)
+6. [Folder Map](#folder-map)
 
 ---
 
@@ -193,10 +194,65 @@ The READMEs in [`0-Data-Input/`](./0-Data-Input/) and [`1-Data-Output/`](./1-Dat
 
 ---
 
+## 5. The AI Cost Bubble — More Usage, Bigger Bill
+
+Section 2 told the optimistic half of the story: caching makes a fat prefix *cheaper than it looks*. This section tells the other half: **the agent economy bills by the token, and tokens grow faster than the work you asked for.**
+
+Three forces compound:
+
+1. **Autonomy multiplies tokens.** A single user turn no longer maps to a single model call. An autonomous loop reads files, calls tools, observes results, reflects, retries. Every step ships the *whole* conversation back to the model. A 10-step agent loop on a 30 k-token context bills roughly **300 k input tokens**, not 30 k.
+2. **Reasoning multiplies output.** Extended-thinking and reasoning modes generate hidden chain-of-thought tokens that you pay for at output rates — typically the most expensive line on the invoice. A "simple" question with deep thinking enabled can cost 5–20× the same question without it.
+3. **Context windows invite waste.** A 200 k or 1 M token window does not lower the price per token; it just removes the ceiling on how much you can burn per call. Cache misses on a 500 k-token prompt are catastrophic, not annoying.
+
+<svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI cost bubble — usage vs bill">
+  <text x="360" y="28" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#1f2937">Usage grows linearly. Spend does not.</text>
+  <line x1="80" y1="260" x2="660" y2="260" stroke="#1f2937" stroke-width="1.5"/>
+  <line x1="80" y1="60" x2="80" y2="260" stroke="#1f2937" stroke-width="1.5"/>
+  <text x="370" y="290" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#4b5563">user turns / day</text>
+  <text x="40" y="160" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#4b5563" transform="rotate(-90 40 160)">monthly spend</text>
+  <path d="M 80 250 L 660 200" stroke="#16a34a" stroke-width="2.5" fill="none" stroke-dasharray="6 4"/>
+  <text x="600" y="190" font-family="sans-serif" font-size="11" fill="#16a34a">naive expectation (linear)</text>
+  <path d="M 80 250 Q 320 245 460 200 T 660 70" stroke="#dc2626" stroke-width="3" fill="none"/>
+  <text x="540" y="105" font-family="sans-serif" font-size="11" font-weight="bold" fill="#dc2626">actual bill</text>
+  <text x="540" y="120" font-family="sans-serif" font-size="11" fill="#dc2626">(loops × thinking × context)</text>
+  <circle cx="460" cy="200" r="4" fill="#dc2626"/>
+  <text x="465" y="225" font-family="sans-serif" font-size="10" fill="#4b5563">agents enabled</text>
+  <circle cx="580" cy="130" r="4" fill="#dc2626"/>
+  <text x="495" y="150" font-family="sans-serif" font-size="10" fill="#4b5563">reasoning on by default</text>
+</svg>
+
+### Where the money actually goes
+
+| Cost driver | What it looks like on the invoice | Mitigation |
+|---|---|---|
+| **Agent loop length** | input tokens scale with `steps × context_size` | bound the loop, summarize on long horizons, dispatch to sub-agents with narrow context |
+| **Reasoning / thinking tokens** | output spend dominates the bill | enable thinking only when the task warrants it; cap budget |
+| **Cache misses** | full-price re-write of the prefix on every turn | freeze the prefix; never reorder it; keep TTL alive |
+| **Per-seat blindness (Copilot)** | flat fee hides which seats and which features actually burn capacity | track turn count, premium-request count, and which models are being routed |
+| **Tool output bloat** | a single `grep` or file read injects 10–50 k tokens into the next turn | filter, paginate, or summarize tool results before they re-enter the loop |
+
+### The bubble
+
+The same physics that make a cached prefix *almost free* (§2) make an uncached agent loop *almost unbounded*. The lever is the same — token count — pulled in opposite directions:
+
+> Caching rewards a **stable, reused** context. Autonomy punishes an **expanding, re-read** context. Pay attention to which regime you are in, on every turn.
+
+Practical heuristics:
+
+- **Measure before optimizing.** Log input/output tokens per turn and per agent. Without numbers, every refactor is a guess.
+- **Treat tokens like SQL queries.** A bad query in a loop is the same failure mode as a bloated tool result in an agent loop.
+- **Bound autonomy with budgets, not vibes.** Max steps, max tokens, max thinking — explicit, versioned, in the prompt.
+
+The folders below ([§6 Folder Map](#folder-map)) make the *input* and *output* sides of this bubble measurable on toy datasets, so the same instinct can be applied at production scale.
+
+---
+
 ## Folder Map
 
 | Folder | What it demonstrates |
 |--------|----------------------|
 | [`0-Data-Input/`](./0-Data-Input/) | **Input side of the black box.** Token cost of the same dataset in 8 formats. CSV wins at 80 tokens; raw-byte JPEG explodes to 43,217. Bytes ≠ tokens. |
 | [`1-Data-Output/`](./1-Data-Output/) | **Output side of the black box.** Token cost of the *same trivial class* generated in 5 languages. F# at 28 tokens; Java at 119. Idiomatic choice has a measurable price. |
-| [`2 - DAC/`](./2%20-%20DAC/) | **Document-as-Code in practice.** A .NET 10 Minimal API (`ContextManager.Api`) shipped with a technical analysis + a functional analysis split into chapters, and an ignored `.workspace/` that hosts user stories, analyses, and plans for Tasks and PRs. The README *is* the spec of the API. |
+| [`2-DAC/`](./2-DAC/) | **Document-as-Code in practice.** A .NET 10 Minimal API (`ContextManager.Api`) shipped with a technical analysis + a functional analysis split into chapters, and an ignored `.workspace/` that hosts user stories, analyses, and plans for Tasks and PRs. The README *is* the spec of the API. |
+| [`3-going-local/`](./3-going-local/) | **DaC on a Node/TS stack.** Context7 MCP server + local web UI sharing one application layer. Ships its own pricing-bubble section showing how a local Context7 endpoint becomes a lever to control what enters (or stays out of) the cached prefix. |
+| [`4-ai-company/`](./4-ai-company/) | **README as a citable knowledge artifact.** Research note on AI adoption vs. policy gap in Italian companies (Salesforce/LineaEDP, key4biz, AI Act, Law 132/2025). Shows that a Markdown file in the repo can carry sourced claims — the same shape an agent can consume as grounded context. |
