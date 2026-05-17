@@ -1,0 +1,22 @@
+{
+  "_disclaimer": "synthetic test data — not real employees of Comune di Napoli",
+  "organization": "Comune di Napoli",
+  "generatedFor": "integration test fixture",
+  "employees": [
+    { "id": "EMP-0001", "firstName": "Antonio",   "lastName": "Esposito",   "role": "Funzionario amministrativo", "department": "Anagrafe" },
+    { "id": "EMP-0002", "firstName": "Maria",     "lastName": "Russo",      "role": "Istruttore direttivo",       "department": "Tributi" },
+    { "id": "EMP-0003", "firstName": "Giuseppe",  "lastName": "Romano",     "role": "Responsabile di settore",    "department": "Urbanistica" },
+    { "id": "EMP-0004", "firstName": "Anna",      "lastName": "Coppola",    "role": "Agente",                     "department": "Polizia Municipale" },
+    { "id": "EMP-0005", "firstName": "Francesco", "lastName": "De Luca",    "role": "Assistente sociale",         "department": "Servizi Sociali" },
+    { "id": "EMP-0006", "firstName": "Lucia",     "lastName": "Marino",     "role": "Istruttore amministrativo",  "department": "Anagrafe" },
+    { "id": "EMP-0007", "firstName": "Salvatore", "lastName": "Ferraro",    "role": "Geometra",                   "department": "Urbanistica" },
+    { "id": "EMP-0008", "firstName": "Carmela",   "lastName": "Sorrentino", "role": "Istruttore contabile",       "department": "Tributi" },
+    { "id": "EMP-0009", "firstName": "Pasquale",  "lastName": "Iovine",     "role": "Ufficiale",                  "department": "Polizia Municipale" },
+    { "id": "EMP-0010", "firstName": "Rosa",      "lastName": "Gallo",      "role": "Educatrice",                 "department": "Servizi Sociali" },
+    { "id": "EMP-0011", "firstName": "Vincenzo",  "lastName": "Barbato",    "role": "Tecnico informatico",        "department": "Sistemi Informativi" },
+    { "id": "EMP-0012", "firstName": "Teresa",    "lastName": "Cimmino",    "role": "Funzionario di vigilanza",   "department": "Polizia Municipale" },
+    { "id": "EMP-0013", "firstName": "Raffaele",  "lastName": "Mazzeo",     "role": "Architetto",                 "department": "Urbanistica" },
+    { "id": "EMP-0014", "firstName": "Elena",     "lastName": "Pagano",     "role": "Istruttore direttivo",       "department": "Risorse Umane" },
+    { "id": "EMP-0015", "firstName": "Domenico",  "lastName": "Improta",    "role": "Responsabile ufficio",       "department": "Protocollo" }
+  ]
+}

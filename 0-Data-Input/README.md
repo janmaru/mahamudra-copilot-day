@@ -209,11 +209,16 @@ Two additional considerations the character-count framing ignores:
 # 1. Generate binary files (pdf, xlsx, jpg) from the canonical dataset
 python artifacts/_generate_pdf_xlsx.py
 
-# 2. Run the token benchmark across all scenarios
+# 2. Generate a pie chart from the CSV dataset
+python artifacts/generate_pie_chart.py
+
+# 3. Run the token benchmark across all scenarios
 python artifacts/benchmark_tokens.py
 ```
 
-The second script writes its full Markdown report to stdout-equivalent and updates the in-memory table. Adjust constants at the top of `benchmark_tokens.py` if the Anthropic pricing assumptions (`ANTHROPIC_PDF_TOKENS_PER_PAGE = 2250`, `ANTHROPIC_VISION_DIVISOR = 750`) change.
+The chart script groups rows by `Continent`, sums `Population (approx)`, and renders `data/geographic_data_pie.png` with Pillow. You can override input file, columns, title, and output path through CLI arguments.
+
+The benchmark script writes its full Markdown report to stdout-equivalent and updates the in-memory table. Adjust constants at the top of `benchmark_tokens.py` if the Anthropic pricing assumptions (`ANTHROPIC_PDF_TOKENS_PER_PAGE = 2250`, `ANTHROPIC_VISION_DIVISOR = 750`) change.
 
 Dependencies: `tiktoken`, `pypdf`, `openpyxl`, `Pillow`, `reportlab`.
 
@@ -226,13 +231,15 @@ Dependencies: `tiktoken`, `pypdf`, `openpyxl`, `Pillow`, `reportlab`.
 ├── README.md                       ← this file
 ├── artifacts/
 │   ├── _generate_pdf_xlsx.py       ← generates pdf/xlsx/jpg from the dataset
-│   └── benchmark_tokens.py         ← runs the token benchmark across all scenarios
+│   ├── benchmark_tokens.py         ← runs the token benchmark across all scenarios
+│   └── generate_pie_chart.py       ← renders a pie chart from the CSV dataset
 └── data/
     ├── geographic_data.csv
     ├── geographic_data.html
     ├── geographic_data.jpg
     ├── geographic_data.md
     ├── geographic_data.pdf
+    ├── geographic_data_pie.png
     ├── geographic_data.txt
     ├── geographic_data.xlsx
     └── geographic_data.xml
